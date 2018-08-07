@@ -4,8 +4,10 @@ import { withSiteData } from 'react-static'
 import logoImg from '../logo.png'
 
 export default withSiteData(() => (
-  <div>
-    <h1 style={{ textAlign: 'center' }}>Welcome to</h1>
-    <img src={logoImg} alt="" />
+  <div className="home-container">
+    <div>
+      <h1>Lee Sargent</h1>
+      <p>Front End Developer</p>
+    </div>
   </div>
 ))

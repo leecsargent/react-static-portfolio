@@ -1,4 +1,3 @@
-import axios from 'axios';
 import admin from 'firebase-admin';
 var serviceAccount = require('./serviceAccountKey.json');
 
@@ -41,17 +40,13 @@ export default {
         component: 'src/containers/Home',
       },
       {
-        path: '/about',
-        component: 'src/containers/About',
-      },
-      {
         path: '/work',
         component: 'src/containers/Work',
         getData: () => ({
           projects,
         }),
         children: projects.map(project => ({
-          path: `/project/${project.id}`,
+          path: `/project/${project.slug}`,
           component: 'src/containers/Post',
           getData: () => ({
             project,
