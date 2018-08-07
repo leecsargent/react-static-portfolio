@@ -2,24 +2,30 @@ import axios from 'axios';
 import admin from 'firebase-admin';
 var serviceAccount = require('./serviceAccountKey.json');
 
+let database;
+let projectsReference;
+
 if (!admin.apps.length) {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
   });
 }
 
-let database = admin.firestore();
+database = admin.firestore();
+projectsReference = database.collection('projects');
 
-database.collection('projects').get()
-  .then((snapshot) => {
-    snapshot.forEach((doc) => {
-      console.log(doc.id, '=>', doc.data());
+let getProjectsFromReference = (reference) => {
+  let projects = [];
+  return projectsReference.get().then((snapshot) => {
+    snapshot.forEach(document => {
+      projects.push(document.data());
     });
+    console.log(projects);
+    return projects;
+  }).catch(error => {
+    console.log('error', error)
   })
-  .catch((err) => {
-    console.log('Error getting documents', err);
-  });
-
+}
 
 export default {
   getSiteData: () => ({
@@ -27,7 +33,7 @@ export default {
   }),
   getRoutes: async () => {
 
-    const { data: projects } = await axios.get('https://jsonplaceholder.typicode.com/posts')
+    const projects = await getProjectsFromReference(projectsReference)
 
     return [
       {
