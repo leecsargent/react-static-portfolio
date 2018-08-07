@@ -2,11 +2,11 @@ import React from 'react'
 import { withRouteData, Link } from 'react-static'
 //
 
-export default withRouteData(({ post }) => (
+export default withRouteData(({ project }) => (
   <div>
     <Link to="/work/">{'<'} Back</Link>
     <br />
-    <h3>{post.title}</h3>
-    <p>{post.body}</p>
+    <h3>{project.title}</h3>
+    <p>{project.body}</p>
   </div>
 ))

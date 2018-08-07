@@ -5,7 +5,7 @@ export default {
     title: 'React Static',
   }),
   getRoutes: async () => {
-    const { data: posts } = await axios.get('https://jsonplaceholder.typicode.com/posts')
+    const { data: projects } = await axios.get('https://jsonplaceholder.typicode.com/posts')
     return [
       {
         path: '/',
@@ -17,15 +17,15 @@ export default {
       },
       {
         path: '/work',
-        component: 'src/containers/Blog',
+        component: 'src/containers/Work',
         getData: () => ({
-          posts,
+          projects,
         }),
-        children: posts.map(post => ({
-          path: `/post/${post.id}`,
+        children: projects.map(project => ({
+          path: `/project/${project.id}`,
           component: 'src/containers/Post',
           getData: () => ({
-            post,
+            project,
           }),
         })),
       },
