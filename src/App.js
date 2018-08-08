@@ -97,6 +97,7 @@ const App = () => (
       <div>
         <nav>
           <Link exact to="/">Home</Link>
+            <Link exact to="/about">About</Link>
           <Link to="/work">Work</Link>
           <Link to="/fun">Fun</Link>
         </nav>

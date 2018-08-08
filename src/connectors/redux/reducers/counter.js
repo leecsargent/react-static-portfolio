@@ -1,8 +1,8 @@
-const initialState = {
+let initialState = {
   count: 0,
-}
+};
 
-export default (state = initialState, action = {}) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case 'INCREMENT':
       return {
@@ -10,10 +10,10 @@ export default (state = initialState, action = {}) => {
         count: state.count + 1,
       }
     case 'RESET':
-      return {
-        ...state,
-        count: 0,
-      }
+    return {
+      ...state,
+      count: 0,
+    }
     default:
       return state
   }

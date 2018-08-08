@@ -21,6 +21,10 @@ export default {
         })
       },
       {
+        path: '/about',
+        component: 'src/containers/About',
+      },
+      {
         path: '/work',
         component: 'src/containers/Work',
         getData: () => ({

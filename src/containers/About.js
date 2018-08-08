@@ -1,14 +1,16 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React from 'react';
+import { connect } from 'react-redux';
 import { increment, reset } from '../connectors/redux/actions/counter';
 
-const Counter = ({count, increment, reset}) => (
-  <div>
-    <p>Value: {count}</p>
+const Counter = ({ count, increment, reset}) => {
+  return (
+    <div>
+      <p>Value: {count}</p>
       <button onClick={increment}>Increment</button>
       <button onClick={reset}>Reset</button>
-  </div>
-)
+    </div>
+  )
+}
 
 const mapStateToProps = ({ counter: { count } }) => ({ count });
 
@@ -17,11 +19,10 @@ const mapDispatchToProps = dispatch => ({
   reset: () => dispatch(reset()),
 });
 
-const CounterConnected = connect(mapStateToProps, mapDispatchToProps)(Counter)
+const CounterConnected = connect(mapStateToProps, mapDispatchToProps)(Counter);
 
 const About = () => (
   <div>
-    <h1>This is what we're all about.</h1>
     <h2>Here is a redux counter:</h2>
     <CounterConnected />
   </div>
