@@ -15,6 +15,7 @@ const App = () => (
         <nav>
           <Link exact to="/">Home</Link>
           <Link to="/work">Work</Link>
+          <Link to="/fun">Fun</Link>
         </nav>
         <div className="content">
           <Routes />

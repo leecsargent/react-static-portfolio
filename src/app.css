@@ -74,6 +74,7 @@ nav a.active::after {
   box-sizing: border-box;;
 }
 
+.music-container,
 .home-container,
 .work-list-container,
 .project-container {
