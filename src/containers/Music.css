@@ -1,0 +1,26 @@
+.musicContainer {
+  max-width: 500px;
+  padding: 60px 20px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.musicProjectsList {
+  list-style: none;
+  padding: 0;
+}
+
+.musicProjectsListItem {
+  font-size: 24px;
+  padding: 12px 0;
+}
+
+.headerSpan {
+  font-weight: 100;
+}
+
+@media (min-width: 768px) {
+  .musicContainer {
+    padding: 60px 0;
+  }
+}

@@ -1,18 +1,17 @@
-
 import React from 'react';
 import { withRouteData, Link } from 'react-static';
 
+import styles from './Work.css';
+
 export default withRouteData(({ projects }) => (
-  <div className="work-list-container">
-    <div>
-      <h1>Projects:</h1>
-      <ul className="projects-list">
-        {projects.map(project => (
-          <li key={project.slug} className="projects-list-item">
-            <Link to={`/work/${project.slug}/`}>{project.title}</Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+  <div className={styles.workContainer}>
+    <h1>Work</h1>
+    <ul className={styles.workProjectsList}>
+      {projects.map(project => (
+        <li key={project.slug} className={styles.workProjectsListItem}>
+          <Link to={`/work/${project.slug}/`}>{project.title}</Link>
+        </li>
+      ))}
+    </ul>
   </div>
 ))

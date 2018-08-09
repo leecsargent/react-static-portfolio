@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withSoundCloudAudio } from 'react-soundplayer/addons';
 import ClassNames from 'classnames';
-
 import {
   PlayButton,
   PrevButton,
@@ -10,6 +9,7 @@ import {
   Timer,
   VolumeControl
 } from 'react-soundplayer/components';
+import styles from './Playlist.css';
 
 class PlaylistSoundPlayer extends Component {
   constructor() {
@@ -56,73 +56,85 @@ class PlaylistSoundPlayer extends Component {
   renderTrackList() {
     const { playlist } = this.props;
 
-    if (!playlist) {
-      return <div>Loading list...</div>;
+    const componentClasses = [styles.trackList];
+
+    if (playlist) {
+      componentClasses.push(styles.trackListShow);
     }
 
-    const tracks = playlist.tracks.map((track, i) => {
-      const classNames = ClassNames('playlist-track-button', {
-        'is-active': this.props.soundCloudAudio._playlistIndex === i
-      });
+    const tracks = playlist && playlist.tracks && playlist.tracks.map((track, i) => {
+      const isActive = this.props.soundCloudAudio._playlistIndex === i;
+
+      const className = isActive
+        ? `${styles.trackButton} ${styles.trackButtonActive}`
+        : `${styles.trackButton}`;
 
       return (
         <button
           key={track.id}
-          className={classNames}
+          className={className}
           onClick={this.playTrackAtIndex.bind(this, i)}>
-          <span className="playlist-track-button__title">{track.title}</span>
-          <span className="playlist-track-button__time">{Timer.prettyTime(track.duration / 1000)}</span>
+          <span className={styles.trackButtonTitle}>{track.title}</span>
+          <span className={styles.trackButtonTime}>{Timer.prettyTime(track.duration / 1000)}</span>
         </button>
       );
     });
 
     return (
-      <div>{tracks}</div>
+      <div className={componentClasses.join(' ')}>{tracks}</div>
     );
   }
 
   renderTrackInfo() {
     let { playlist, currentTime, duration } = this.props;
-    const componentClasses = ['current-track'];
+    let componentClasses = [styles.currentTrack];
+    let previousButtonClass = `${styles.controlButton} ${styles.previousButton}`;
+    let nextButtonClass = `${styles.controlButton} ${styles.nextButton}`;
+    let playButtonClass = `${styles.controlButton} ${styles.playButton}`;
+    let volumeButtonClass = `${styles.controlButton} ${styles.volumeButton}`;
+    let progressClass = `${styles.progress}`;
+    let progressInnerClass = `${styles.progressInner}`;
+    let timerClass = `${styles.timer}`;
+    let headerClass = `${styles.header}`;
 
-    if (playlist) { componentClasses.push('show'); }
-    // if (!playlist) {
-    //   return <div>Loading track info...</div>;
-    // }
+    if (playlist) {
+      componentClasses.push(styles.currentTrackShow);
+    }
 
     return (
       <div className={componentClasses.join(' ')}>
+        <h2 className={headerClass}>{playlist ? playlist.title : ''}</h2>
         <div>
-          <Timer duration={duration || 0} currentTime={currentTime} {...this.props} />
-        </div>
-
-        <h2>{playlist ? playlist.title : ''}</h2>
-        <div>
-          <div className="play-next-prev">
+          <div className={styles.playbackControls}>
             <PrevButton
-              className="track-control track-control__prev"
+              className={previousButtonClass}
               onPrevClick={this.prevIndex.bind(this)}
               {...this.props}
             />
             <PlayButton
-              className="track-control track-control__play"
+              className={playButtonClass}
               {...this.props}
             >
             </PlayButton>
             <NextButton
-              className="track-control track-control__next"
+              className={nextButtonClass}
               onNextClick={this.nextIndex.bind(this)}
               {...this.props}
             />
+            <VolumeControl
+              className={volumeButtonClass}
+              {...this.props}
+            />
+            <Progress
+              className={progressClass}
+              innerClassName={progressInnerClass}
+              value={(currentTime / duration) * 100 || 0}
+              {...this.props}
+            />
           </div>
-          <VolumeControl
-            className="track-control"
-            {...this.props}
-          />
-          <Progress
-            value={(currentTime / duration) * 100 || 0}
-            {...this.props}
-          />
+          <div className={timerClass}>
+            <Timer duration={duration || 0} currentTime={currentTime} {...this.props} />
+          </div>
         </div>
       </div>
     )
@@ -131,7 +143,7 @@ class PlaylistSoundPlayer extends Component {
   render() {
 
     return (
-      <div className="playlist">
+      <div className={styles.player}>
         {this.renderTrackInfo()}
         {this.renderTrackList()}
       </div>

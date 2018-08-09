@@ -1,0 +1,33 @@
+.projectContainer {
+  max-width: 500px;
+  padding: 60px 20px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.projectDescription {
+  line-height: 24px;
+}
+
+.projectDetailsList {
+  list-style: none;
+  padding: 0;
+}
+
+.projectListItem {
+  padding: 20px 0;
+}
+
+.projectDetailImage {
+  border: 1px solid #ebebeb;
+}
+
+.projectDetailText {
+  margin: 25px 0 20px;
+}
+
+@media (min-width: 768px) {
+  .projectContainer {
+    padding: 60px 0;
+  }
+}

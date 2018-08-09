@@ -87,4 +87,24 @@ export default {
       },
     ]
   },
+  webpack: (config, { defaultLoaders }) => {
+    config.module.rules = [
+      {
+        oneOf: [
+          {
+            test: /\.json$/,
+            use: [{ loader: 'json-loader' }],
+          },
+          defaultLoaders.jsLoader,
+          // defaultLoaders.cssLoader,
+          {
+            test: /\.css$/,
+            loader: 'style-loader!css-loader?modules=true&localIdentName=[name]__[local]___[hash:base64:5]'
+          },
+          defaultLoaders.fileLoader,
+        ],
+      },
+    ]
+    return config
+  },
 }
