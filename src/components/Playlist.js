@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withSoundCloudAudio } from 'react-soundplayer/addons';
 import ClassNames from 'classnames';
+
 import {
   PlayButton,
   PrevButton,
@@ -56,11 +57,11 @@ class PlaylistSoundPlayer extends Component {
     const { playlist } = this.props;
 
     if (!playlist) {
-      return <div className="p2 center">Loading...</div>;
+      return <div>Loading list...</div>;
     }
 
     const tracks = playlist.tracks.map((track, i) => {
-      const classNames = ClassNames('button', {
+      const classNames = ClassNames('playlist-track-button', {
         'is-active': this.props.soundCloudAudio._playlistIndex === i
       });
 
@@ -68,10 +69,9 @@ class PlaylistSoundPlayer extends Component {
         <button
           key={track.id}
           className={classNames}
-          onClick={this.playTrackAtIndex.bind(this, i)}
-        >
-          <span>{track.user.username} - {track.title}</span>
-          <span>{Timer.prettyTime(track.duration / 1000)}</span>
+          onClick={this.playTrackAtIndex.bind(this, i)}>
+          <span className="playlist-track-button__title">{track.title}</span>
+          <span className="playlist-track-button__time">{Timer.prettyTime(track.duration / 1000)}</span>
         </button>
       );
     });
@@ -81,46 +81,58 @@ class PlaylistSoundPlayer extends Component {
     );
   }
 
-  render() {
+  renderTrackInfo() {
     let { playlist, currentTime, duration } = this.props;
+    const componentClasses = ['current-track'];
+
+    if (playlist) { componentClasses.push('show'); }
+    // if (!playlist) {
+    //   return <div>Loading track info...</div>;
+    // }
 
     return (
-      <div className="bg-darken-1 red mt1 mb3 rounded">
-        <div className="p2">
-          <div className="flex flex-center">
-            <h2 className="h4 flex-auto nowrap m0 semibold">{playlist ? playlist.user.username : ''}</h2>
-            <Timer className="h6 mr1 regular" duration={duration || 0} currentTime={currentTime} {...this.props} />
-          </div>
-          <h2 className="h2 nowrap caps mt0 mb2 semibold">{playlist ? playlist.title : ''}</h2>
+      <div className={componentClasses.join(' ')}>
+        <div>
+          <Timer duration={duration || 0} currentTime={currentTime} {...this.props} />
+        </div>
 
-          <div className="flex flex-center">
+        <h2>{playlist ? playlist.title : ''}</h2>
+        <div>
+          <div className="play-next-prev">
             <PrevButton
-              className="flex-none h3 button button-narrow button-transparent button-grow rounded"
+              className="track-control track-control__prev"
               onPrevClick={this.prevIndex.bind(this)}
               {...this.props}
             />
             <PlayButton
-              className="flex-none h2 button button-transparent button-grow rounded"
+              className="track-control track-control__play"
               {...this.props}
-            />
+            >
+            </PlayButton>
             <NextButton
-              className="flex-none h3 button button-narrow button-transparent button-grow rounded"
+              className="track-control track-control__next"
               onNextClick={this.nextIndex.bind(this)}
               {...this.props}
             />
-            <VolumeControl
-              className='flex flex-center mr2'
-              buttonClassName="flex-none h4 button button-transparent button-grow rounded"
-              {...this.props}
-            />
-            <Progress
-              className="mt1 mb1 rounded"
-              innerClassName="rounded-left"
-              value={(currentTime / duration) * 100 || 0}
-              {...this.props}
-            />
           </div>
+          <VolumeControl
+            className="track-control"
+            {...this.props}
+          />
+          <Progress
+            value={(currentTime / duration) * 100 || 0}
+            {...this.props}
+          />
         </div>
+      </div>
+    )
+  }
+
+  render() {
+
+    return (
+      <div className="playlist">
+        {this.renderTrackInfo()}
         {this.renderTrackList()}
       </div>
     );

@@ -9,7 +9,7 @@ export default withRouteData(({ projects }) => (
       <ul className="projects-list">
         {projects.map(project => (
           <li key={project.slug} className="projects-list-item">
-            <Link to={`/work/project/${project.slug}/`}>{project.title}</Link>
+            <Link to={`/work/${project.slug}/`}>{project.title}</Link>
           </li>
         ))}
       </ul>

@@ -3,6 +3,7 @@ var serviceAccount = require('./serviceAccountKey.json');
 
 let database;
 let projectsReference;
+let playlistsReference;
 
 if (!admin.apps.length) {
   admin.initializeApp({
@@ -12,6 +13,7 @@ if (!admin.apps.length) {
 
 database = admin.firestore();
 projectsReference = database.collection('projects').orderBy('order');
+playlistsReference = database.collection('playlists').where('published', '==', true);
 
 let getProjectsFromReference = (reference) => {
   let projects = [];
@@ -25,6 +27,18 @@ let getProjectsFromReference = (reference) => {
   })
 }
 
+let getPlaylistsFromReference = (reference) => {
+  let playlists = [];
+  return playlistsReference.get().then((snapshot) => {
+    snapshot.forEach(document => {
+      playlists.push(document.data());
+    });
+    return playlists;
+  }).catch(error => {
+    console.log('error', error)
+  })
+}
+
 export default {
   getSiteData: () => ({
     title: 'React Static',
@@ -32,6 +46,7 @@ export default {
   getRoutes: async () => {
 
     const projects = await getProjectsFromReference(projectsReference)
+    const playlists = await getPlaylistsFromReference(playlistsReference)
 
     return [
       {
@@ -45,7 +60,7 @@ export default {
           projects,
         }),
         children: projects.map(project => ({
-          path: `/project/${project.slug}`,
+          path: `/${project.slug}`,
           component: 'src/containers/Post',
           getData: () => ({
             project,
@@ -55,6 +70,16 @@ export default {
       {
         path: '/fun',
         component: 'src/containers/Music',
+        getData: () => ({
+          playlists,
+        }),
+        children: playlists.map(playlist => ({
+          path: `/${playlist.slug}`,
+          component: 'src/containers/Playlist',
+          getData: () => ({
+            playlist,
+          }),
+        }))
       },
       {
         is404: true,
