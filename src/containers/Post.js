@@ -3,6 +3,8 @@ import { withRouteData, Link } from 'react-static'
 import styles from './Post.css'
 
 export default withRouteData(({ project }) => {
+  console.log(JSON.stringify(project));
+  
   return (
     <div className={styles.projectContainer}>
       <h3>{project.title}</h3>

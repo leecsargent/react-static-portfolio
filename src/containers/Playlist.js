@@ -7,6 +7,8 @@ const clientId = '77ed62a445e34fcc90617a4335460d6c';
 const url = 'https://soundcloud.com/leesargent/sets/';
 
 export default withRouteData(({ playlist }) => {
+  console.log(JSON.stringify(playlist))
+
   let urlArray = [url];
   let resolveUrl;
 

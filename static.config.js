@@ -1,43 +1,4 @@
-import admin from 'firebase-admin';
-var serviceAccount = require('./serviceAccountKey.json');
-
-let database;
-let projectsReference;
-let playlistsReference;
-
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
-  });
-}
-
-database = admin.firestore();
-projectsReference = database.collection('projects').orderBy('order');
-playlistsReference = database.collection('playlists').where('published', '==', true);
-
-let getProjectsFromReference = (reference) => {
-  let projects = [];
-  return projectsReference.get().then((snapshot) => {
-    snapshot.forEach(document => {
-      projects.push(document.data());
-    });
-    return projects;
-  }).catch(error => {
-    console.log('error', error)
-  })
-}
-
-let getPlaylistsFromReference = (reference) => {
-  let playlists = [];
-  return playlistsReference.get().then((snapshot) => {
-    snapshot.forEach(document => {
-      playlists.push(document.data());
-    });
-    return playlists;
-  }).catch(error => {
-    console.log('error', error)
-  })
-}
+import axios from 'axios';
 
 export default {
   getSiteData: () => ({
@@ -45,8 +6,8 @@ export default {
   }),
   getRoutes: async () => {
 
-    const projects = await getProjectsFromReference(projectsReference)
-    const playlists = await getPlaylistsFromReference(playlistsReference)
+    const { data: projects } = await axios.get('http://localhost:4040/api/projects')
+    const { data: playlists } = await axios.get('http://localhost:4040/api/playlists')
 
     return [
       {
