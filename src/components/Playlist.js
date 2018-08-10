@@ -9,7 +9,144 @@ import {
   Timer,
   VolumeControl
 } from 'react-soundplayer/components';
-import styles from './Playlist.css';
+import styled from 'styled-components';
+const PlaylistWrapper = styled.div`
+  .player {
+    margin-top: 30px;
+  }
+
+  .header {
+    padding: 0 10px;
+    font-weight: 100;
+  }
+
+  .trackButton {
+    font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    display: flex;
+    width: 100%;
+    font-size: 1em;
+    padding: 1rem;
+    margin: 0;
+    height: auto;
+    vertical-align: middle;
+    border-radius: 3px;
+    opacity: 0.6;
+    box-sizing: border-box;
+    -webkit-transition: opacity 0.5s;
+    -moz-transition: opacity0.5s;
+    -o-transition: opacity 0.5s;
+    transition: opacity 0.5s;
+  }
+
+  .trackButton:hover {
+    opacity: 1;
+  }
+
+  .trackButtonActive {
+    opacity: 1;
+  }
+
+  .trackButtonTitle {
+    margin-right: 10px;
+  }
+
+  .trackList {
+    -webkit-transition: opacity 0.5s;
+    -moz-transition: opacity0.5s;
+    -o-transition: opacity 0.5s;
+    transition: opacity 0.5s;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .trackListShow {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .currentTrack {
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: opacity 0.5s;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .currentTrackShow {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .playbackControls {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .controlButton {
+    padding: 10px;
+    background-color: transparent;
+    text-decoration: none;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+  }
+
+  .playButton {
+    width: 34px;
+  }
+
+  .previousButton,
+  .nextButton {
+    width: 40px;
+  }
+
+  .progress {
+    height: 10px;
+    width: 200px;
+    background: #ccc;
+    align-self: center;
+  }
+
+  .progressInner {
+    background: black;
+    height: 100%;
+  }
+
+  .timer {
+    text-align: right;
+    font-size: 12px;
+  }
+
+  .volumeButton button {
+    width: 40px;
+  }
+
+  .volumeButton div {
+    display: none;
+  }
+
+  /* TODO just apply this instead of classes */
+  button {
+    background-color: transparent;
+    text-decoration: none;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+  }
+
+  @media (min-width: 768px) {
+    .currentTrack {
+      padding: 1rem;
+    }
+
+    .trackList {
+      padding: 0 10px;
+    }
+  }
+`
 
 class PlaylistSoundPlayer extends Component {
   constructor() {
@@ -56,26 +193,26 @@ class PlaylistSoundPlayer extends Component {
   renderTrackList() {
     const { playlist } = this.props;
 
-    const componentClasses = [styles.trackList];
+    const componentClasses = ["trackList"];
 
     if (playlist) {
-      componentClasses.push(styles.trackListShow);
+      componentClasses.push("trackListShow");
     }
 
     const tracks = playlist && playlist.tracks && playlist.tracks.map((track, i) => {
       const isActive = this.props.soundCloudAudio._playlistIndex === i;
 
       const className = isActive
-        ? `${styles.trackButton} ${styles.trackButtonActive}`
-        : `${styles.trackButton}`;
+        ? "trackButton trackButtonActive"
+        : "trackButton";
 
       return (
         <button
           key={track.id}
           className={className}
           onClick={this.playTrackAtIndex.bind(this, i)}>
-          <span className={styles.trackButtonTitle}>{track.title}</span>
-          <span className={styles.trackButtonTime}>{Timer.prettyTime(track.duration / 1000)}</span>
+          <span className="trackButtonTitle">{track.title}</span>
+          <span className="trackButtonTime">{Timer.prettyTime(track.duration / 1000)}</span>
         </button>
       );
     });
@@ -87,25 +224,25 @@ class PlaylistSoundPlayer extends Component {
 
   renderTrackInfo() {
     let { playlist, currentTime, duration } = this.props;
-    let componentClasses = [styles.currentTrack];
-    let previousButtonClass = `${styles.controlButton} ${styles.previousButton}`;
-    let nextButtonClass = `${styles.controlButton} ${styles.nextButton}`;
-    let playButtonClass = `${styles.controlButton} ${styles.playButton}`;
-    let volumeButtonClass = `${styles.controlButton} ${styles.volumeButton}`;
-    let progressClass = `${styles.progress}`;
-    let progressInnerClass = `${styles.progressInner}`;
-    let timerClass = `${styles.timer}`;
-    let headerClass = `${styles.header}`;
+    let componentClasses = ["currentTrack"];
+    let previousButtonClass = "controlButton previousButton";
+    let nextButtonClass = "controlButton nextButton";
+    let playButtonClass = "controlButton playButton";
+    let volumeButtonClass = "controlButton volumeButton";
+    let progressClass = "progress";
+    let progressInnerClass = "progressInner";
+    let timerClass = "timer";
+    let headerClass = "header";
 
     if (playlist) {
-      componentClasses.push(styles.currentTrackShow);
+      componentClasses.push("currentTrackShow");
     }
 
     return (
       <div className={componentClasses.join(' ')}>
         <h2 className={headerClass}>{playlist ? playlist.title : ''}</h2>
         <div>
-          <div className={styles.playbackControls}>
+          <div className="playbackControls">
             <PrevButton
               className={previousButtonClass}
               onPrevClick={this.prevIndex.bind(this)}
@@ -141,12 +278,13 @@ class PlaylistSoundPlayer extends Component {
   }
 
   render() {
-
     return (
-      <div className={styles.player}>
-        {this.renderTrackInfo()}
-        {this.renderTrackList()}
-      </div>
+      <PlaylistWrapper>
+        <div className="player">
+          {this.renderTrackInfo()}
+          {this.renderTrackList()}
+        </div>
+      </PlaylistWrapper>
     );
   }
 }
