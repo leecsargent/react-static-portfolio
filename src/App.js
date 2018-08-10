@@ -7,15 +7,26 @@ import store from './connectors/redux'
 import styled, { injectGlobal } from 'styled-components'
 
 injectGlobal`
+  html {
+    height: 100%;
+  }
+
   body {
     font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
       'Lucida Grande', sans-serif;
-      font-weight: 300;
-      font-size: 16px;
-      margin: 0;
-      padding: 0;
-      color: #2B2B3A;
-      height: 100%;
+    font-weight: 300;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    color: #2B2B3A;
+    height: 100%;
+    background-image:
+      radial-gradient(
+        circle at top right,
+        white,
+        #efefef 50%
+      );
+    background-attachment: fixed;
   }
 `
 

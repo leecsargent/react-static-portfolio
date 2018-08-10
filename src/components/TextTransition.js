@@ -7,8 +7,9 @@ const IMAGE_FEAD_IN_CAPTION_CLASS = `image-loader-caption-fade-in`;
 const TextTransitionWrapper = styled.div`
   .text-transition {
     opacity: 0;
-    transform: translateY(20px);
-    transition: 0.6s;
+    transform: translateY(10px);
+    transition-duration: 0.6s;
+    transition-delay: 1s;
   }
 
   .text-transition.show {
@@ -31,14 +32,14 @@ class TextTransition extends Component {
   }
 
   render() {
-    let { text } = this.props;
+    let { children } = this.props;
     let className = this.state.loading
       ? 'text-transition'
       : 'text-transition show';
 
     return (
       <TextTransitionWrapper>
-        <p className={className}>{text}</p>
+        <div className={className}>{children}</div>
       </TextTransitionWrapper>
     );
   }

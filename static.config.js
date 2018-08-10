@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react'
 import { ServerStyleSheet } from 'styled-components'
+import config from './config';
 
 export default {
   getSiteData: () => ({
@@ -8,13 +9,16 @@ export default {
   }),
   getRoutes: async () => {
 
-    const { data: projects } = await axios.get('http://localhost:4040/api/projects')
-    const { data: playlists } = await axios.get('http://localhost:4040/api/playlists')
+    const { data: projects } = await axios.get(`${config.endpoint}/projects`)
+    const { data: playlists } = await axios.get(`${config.endpoint}/playlists`)
 
     return [
       {
         path: '/',
         component: 'src/containers/Home',
+        getData: () => ({
+          projects,
+        })
       },
       {
         path: '/work',
