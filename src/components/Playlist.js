@@ -161,7 +161,6 @@ class PlaylistSoundPlayer extends Component {
     const { soundCloudAudio } = this.props;
 
     this.setState({activeIndex: playlistIndex});
-
     soundCloudAudio.play({ playlistIndex });
   }
 
