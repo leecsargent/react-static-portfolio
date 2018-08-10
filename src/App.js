@@ -36,10 +36,12 @@ const AppStyles = styled.div`
 
   nav {
     position: fixed;
+    z-index: 1;
     width: 100%;
     background: #F4F5F6;
     box-shadow: 0px 1px 0px #ccc;
     overflow-y: hidden;
+    z-index: 1;
   }
 
   nav a {
