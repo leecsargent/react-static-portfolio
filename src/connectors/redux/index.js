@@ -1,5 +1,5 @@
-import { createStore } from 'redux'
-
+import { createStore, applyMiddleware, compose } from 'redux'
+import thunk from './middleware/thunk';
 import reducer from './reducers'
 
 if (typeof window === 'undefined') {
@@ -10,8 +10,10 @@ if (typeof window === 'undefined') {
 const store = createStore(
   reducer,
   {}, // initial state
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  compose(
+    applyMiddleware(thunk),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  )
 )
 /* eslint-enable */
-
 export default store

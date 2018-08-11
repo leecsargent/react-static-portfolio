@@ -20,12 +20,11 @@ injectGlobal`
     padding: 0;
     color: #2B2B3A;
     height: 100%;
-    background-image:
-      radial-gradient(
-        circle at top right,
-        white,
-        #efefef 50%
-      );
+    background-image: radial-gradient(
+      circle at top right,
+      #ffffff,
+      #ebebeb
+    );
     background-attachment: fixed;
   }
 `

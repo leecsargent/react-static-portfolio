@@ -1,32 +1,72 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { increment, reset } from '../connectors/redux/actions/counter';
+import styled from 'styled-components';
+import { fetchProjects } from '../connectors/redux/actions/projects';
 
-const Counter = ({ count, increment, reset}) => {
-  return (
-    <div>
-      <p>Value: {count}</p>
-      <button onClick={increment}>Increment</button>
-      <button onClick={reset}>Reset</button>
-    </div>
-  )
+class Projects extends React.Component {
+  constructor() {
+    super();
+  }
+
+  componentDidMount() {
+    this.props.fetchProjects();
+  }
+
+  renderProjects() {
+    const { projectsList, status } = this.props;
+    if (status === 'BUSY') {
+      return (
+        <h1>loading...</h1>
+      )
+    }
+
+    return (
+      <ul className="workProjectsList">
+        {projectsList.map(project => (
+          <li key={project.slug} className="workProjectsListItem">
+            {project.title}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  render() {
+    return (
+      <div>
+        { this.renderProjects() }
+      </div>
+    )
+  }
 }
 
-const mapStateToProps = ({ counter: { count } }) => ({ count });
+const mapStateToProps = (
+  {
+    projects: {
+      projectsList,
+      status,
+    }
+  }
+) => (
+  {
+    projectsList,
+    status
+  }
+);
 
-const mapDispatchToProps = dispatch => ({
-  increment: () => dispatch(increment()),
-  reset: () => dispatch(reset()),
-});
+const mapDispatchToProps = (dispatch) => (
+  {
+    fetchProjects: () => dispatch(fetchProjects()),
+  }
+)
 
-const CounterConnected = connect(mapStateToProps, mapDispatchToProps)(Counter);
+const ProjectsListConnected = connect(mapStateToProps, mapDispatchToProps)(Projects);
 
 const About = () => (
   <div>
-    <h2>Here is a redux counter:</h2>
-    <CounterConnected />
+    <ProjectsListConnected />
   </div>
 )
 
-export { CounterConnected }
+export { ProjectsListConnected }
 export default About
