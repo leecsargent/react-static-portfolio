@@ -1,6 +1,9 @@
 import { createStore, applyMiddleware, compose } from 'redux'
+import {composeWithDevTools} from 'redux-devtools-extension/developmentOnly';
 import thunk from './middleware/thunk';
 import reducer from './reducers'
+
+const { REACT_STATIC_ENV } = process.env;
 
 if (typeof window === 'undefined') {
   global.window = {}
@@ -10,10 +13,7 @@ if (typeof window === 'undefined') {
 const store = createStore(
   reducer,
   {}, // initial state
-  compose(
-    applyMiddleware(thunk),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
+  composeWithDevTools(applyMiddleware(thunk))
 )
 /* eslint-enable */
 export default store
