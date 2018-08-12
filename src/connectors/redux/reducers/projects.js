@@ -10,14 +10,12 @@ export default (state = initialState, action) => {
         ...state,
         status: 'BUSY',
       }
-
     case 'FETCH_PROJECTS_SUCCESS':
       return {
         ...state,
-        status: 'READY',
         projectsList: action.payload,
+        status: 'READY',
       }
-
     default:
       return state
   }

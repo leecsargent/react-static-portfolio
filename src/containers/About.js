@@ -14,6 +14,7 @@ class Projects extends React.Component {
 
   renderProjects() {
     const { projectsList, status } = this.props;
+
     if (status === 'BUSY') {
       return (
         <h1>loading...</h1>
