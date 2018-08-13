@@ -5,6 +5,7 @@ import { hot } from 'react-hot-loader'
 import Routes from 'react-static-routes'
 import store from './connectors/redux'
 import styled, { injectGlobal } from 'styled-components'
+import GithubSVG from './gh.svg'
 
 injectGlobal`
   html {
@@ -27,14 +28,14 @@ injectGlobal`
     );
     background-attachment: fixed;
   }
-`
-
-const AppStyles = styled.div`
   #root,
   #root > div {
     height: 100%;
+    min-height: 100%;
   }
+`
 
+const AppStyles = styled.div`
   a {
     text-decoration: none;
     color: #254558;
@@ -46,6 +47,7 @@ const AppStyles = styled.div`
 
   nav {
     position: fixed;
+    height: 52px;
     z-index: 1;
     width: 100%;
     background: #F4F5F6;
@@ -54,7 +56,7 @@ const AppStyles = styled.div`
     z-index: 1;
   }
 
-  nav a {
+  .nav-link {
     color: #254558;
     padding: 1rem ;
     display: inline-block;
@@ -65,27 +67,53 @@ const AppStyles = styled.div`
     font-weight: lighter;
   }
 
-  nav a::after {
+  .nav-link::after {
     content: '';
     display: block;
     width: 100%;
     background: #254558;
     height: 3px;
+    top: 15px;
+    transform: translateY(5px);
+    transition: transform 0.6s;
     position: relative;
-    top: 20px;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
   }
 
-  nav a.active::after {
-    -webkit-animation: activeTabBorder 0.75s forwards;
-    animation: activeTabBorder 0.75s forwards;
+  .nav-link.active::after {
+    transform: translateY(0);
+  }
+
+  .wrapper {
+    min-height: 100%;
   }
 
   .content {
     padding: 1rem;
+    box-sizing: border-box;
     height: 100%;
-    box-sizing: border-box;;
+  }
+
+  .footer {
+    height: 70px;
+    margin-top: -70px;
+  }
+
+  .footer-link {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .footer-text {
+    margin: 0;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .work-link-svg {
+    width: 20px;
+    height: 20px;
+    margin-bottom: 10px;
   }
 `
 
@@ -93,18 +121,24 @@ const App = () => (
   <Provider store={store}>
     <Router>
       <AppStyles>
-      <div>
-        <nav>
-          <Link exact to="/">Home</Link>
-          <Link exact to="/about">About</Link>
-          <Link to="/work">Work</Link>
-          <Link to="/fun">Fun</Link>
-        </nav>
-        <div className="content">
-          <Routes />
+        <div className="wrapper">
+          <nav>
+            <Link exact to="/" className="nav-link">Home</Link>
+            <Link to="/work" className="nav-link">Work</Link>
+            <Link to="/fun" className="nav-link">Fun</Link>
+          </nav>
+          <div className="content">
+            <Routes />
+          </div>
         </div>
-      </div>
-    </AppStyles>
+        <footer className="footer">
+          <p className="footer-text">
+            <Link to="https://github.com/lsarge/react-static-portfolio" target="_blank" className="footer-link">
+              <img src={GithubSVG} className="work-link-svg"/>Here's how I'm building this.
+            </Link>
+          </p>
+        </footer>
+      </AppStyles>
     </Router>
   </Provider>
 )
