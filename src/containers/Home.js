@@ -40,13 +40,17 @@ const HomeWrapper = styled.div`
 `
 
 const Home = withRouteData(({ projects }) => {
+
   let latestFeaturedProject = projects.filter((project) => project.featured)
-    .sort((projectA, projectB) => {
-      return projectA.createdAt > projectB.createdAt ;
-    })[0];
+   .sort((projectA, projectB) => {
+     return (projectA.createdAt > projectB.createdAt)
+     ? 1 : (projectB.createdAt < projectA.createdAt)
+     ? -1 : 0;
+   })[0];
 
-  let featuredImage = latestFeaturedProject.details.filter((detail) => detail.featured)[0].image;
-
+ let featureDetail = latestFeaturedProject.details.filter((detail) => detail.featured)[0];
+ let featuredImage = featureDetail.image;
+ 
   return (
     <HomeWrapper>
       <div className="homeContainer">
