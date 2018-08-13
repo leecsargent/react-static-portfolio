@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchProjects } from '../connectors/redux/actions/projects';
+import { fetchProjects } from '../../../connectors/redux/actions/projects';
 
 class Projects extends React.Component {
   componentDidMount() {

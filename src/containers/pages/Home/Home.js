@@ -2,7 +2,7 @@ import React from 'react';
 import { withSiteData, withRouteData, Link } from 'react-static';
 import ImageLoading, { Fallback, LoadingPlaceholder } from 'react-image-loading';
 import styled from 'styled-components';
-import TextTransition from '../components/TextTransition';
+import TextTransition from '../../../components/TextTransition';
 
 const HomeWrapper = styled.div`
   .homeContainer {

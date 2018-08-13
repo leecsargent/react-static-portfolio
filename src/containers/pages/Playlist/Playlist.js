@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouteData } from 'react-static';
 import styled from 'styled-components';
-import Playlist from '../components/Playlist';
+import Playlist from '../../../components/Playlist';
 
 const PlaylistWrapper = styled.div`
   .playlistContainer {

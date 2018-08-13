@@ -15,24 +15,24 @@ export default {
     return [
       {
         path: '/',
-        component: 'src/containers/Home',
+        component: 'src/containers/pages/Home/',
         getData: () => ({
           projects,
         })
       },
       {
         path: '/about',
-        component: 'src/containers/About',
+        component: 'src/containers/pages/About',
       },
       {
         path: '/work',
-        component: 'src/containers/Work',
+        component: 'src/containers/pages/Work',
         getData: () => ({
           projects,
         }),
         children: projects.map(project => ({
           path: `/${project.slug}`,
-          component: 'src/containers/Post',
+          component: 'src/containers/pages/Post',
           getData: () => ({
             project,
           }),
@@ -40,13 +40,13 @@ export default {
       },
       {
         path: '/fun',
-        component: 'src/containers/Music',
+        component: 'src/containers/pages/Music',
         getData: () => ({
           playlists,
         }),
         children: playlists.map(playlist => ({
           path: `/${playlist.slug}`,
-          component: 'src/containers/Playlist',
+          component: 'src/containers/pages/Playlist',
           getData: () => ({
             playlist,
           }),
@@ -54,7 +54,7 @@ export default {
       },
       {
         is404: true,
-        component: 'src/containers/404',
+        component: 'src/containers/pages/404',
       },
     ]
   },
