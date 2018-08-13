@@ -37,60 +37,55 @@ const HomeWrapper = styled.div`
       font-size: 16px;
     }
   }
-`
+`;
 
 const Home = withRouteData(({ projects }) => {
+  const latestFeaturedProject = projects.filter(project => project.featured)
+    .sort((projectA, projectB) => ((projectA.createdAt > projectB.createdAt)
+      ? 1 : (projectB.createdAt < projectA.createdAt)
+        ? -1 : 0))[0];
 
-  let latestFeaturedProject = projects.filter((project) => project.featured)
-   .sort((projectA, projectB) => {
-     return (projectA.createdAt > projectB.createdAt)
-     ? 1 : (projectB.createdAt < projectA.createdAt)
-     ? -1 : 0;
-   })[0];
+  const featureDetail = latestFeaturedProject.details.filter(detail => detail.featured)[0];
+  const featuredImage = featureDetail.image;
 
- let featureDetail = latestFeaturedProject.details.filter((detail) => detail.featured)[0];
- let featuredImage = featureDetail.image;
- 
   return (
     <HomeWrapper>
       <div className="homeContainer">
         <h1 className="header">Lee Sargent</h1>
-        <TextTransition  >
+        <TextTransition >
           <p className="subheader">Front End Developer</p>
         </TextTransition>
         <ImageLoading>
-          {(ref, status) => {
-            return (
-              <React.Fragment>
-                {status === 'error' || !featuredImage
-                  ? <Fallback style={{ backgroundColor: '#ccc'}} />
+          {(ref, status) => (
+            <React.Fragment>
+              {status === 'error' || !featuredImage
+                  ? <Fallback style={{ backgroundColor: '#ccc' }} />
                   : <React.Fragment>
-                      <img ref={ref} src={featuredImage} className="projectDetailImage" />
-                      <LoadingPlaceholder
-                        style={{
+                    <img ref={ref} src={featuredImage} className="projectDetailImage" />
+                    <LoadingPlaceholder
+                      style={{
                           transition: 'opacity 1.2s',
                           opacity: status === 'loading' ? 1 : 0,
-                          backgroundColor: 'white'
+                          backgroundColor: 'white',
                         }}
-                        animate={status === 'loading'}
-                      />
-                      <TextTransition  >
-                        <p className="subheader">☝️ Recent Work:
-                          {' '}
-                          <Link to={`/work/${latestFeaturedProject.slug}/`}>
-                            {latestFeaturedProject.title}
-                          </Link>
-                        </p>
-                      </TextTransition>
-                    </React.Fragment>
+                      animate={status === 'loading'}
+                    />
+                    <TextTransition >
+                      <p className="subheader">☝️ Recent Work:
+                        {' '}
+                        <Link to={`/work/${latestFeaturedProject.slug}/`}>
+                          {latestFeaturedProject.title}
+                        </Link>
+                      </p>
+                    </TextTransition>
+                  </React.Fragment>
                 }
-              </React.Fragment>
-            )
-          }}
+            </React.Fragment>
+            )}
         </ImageLoading>
       </div>
     </HomeWrapper>
-  )
-})
+  );
+});
 
 export default withSiteData(Home);

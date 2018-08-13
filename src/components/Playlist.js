@@ -7,9 +7,10 @@ import {
   NextButton,
   Progress,
   Timer,
-  VolumeControl
+  VolumeControl,
 } from 'react-soundplayer/components';
 import styled from 'styled-components';
+
 const PlaylistWrapper = styled.div`
   .player {
     margin-top: 30px;
@@ -146,21 +147,21 @@ const PlaylistWrapper = styled.div`
       padding: 0 10px;
     }
   }
-`
+`;
 
 class PlaylistSoundPlayer extends Component {
   constructor() {
     super();
 
     this.state = {
-      activeIndex: 0
+      activeIndex: 0,
     };
   }
 
   playTrackAtIndex(playlistIndex) {
     const { soundCloudAudio } = this.props;
 
-    this.setState({activeIndex: playlistIndex});
+    this.setState({ activeIndex: playlistIndex });
     soundCloudAudio.play({ playlistIndex });
   }
 
@@ -173,7 +174,7 @@ class PlaylistSoundPlayer extends Component {
     }
 
     if (activeIndex || activeIndex === 0) {
-      this.setState({activeIndex: ++activeIndex});
+      this.setState({ activeIndex: ++activeIndex });
     }
   }
 
@@ -185,31 +186,32 @@ class PlaylistSoundPlayer extends Component {
     }
 
     if (activeIndex || activeIndex === 0) {
-      this.setState({activeIndex: --activeIndex});
+      this.setState({ activeIndex: --activeIndex });
     }
   }
 
   renderTrackList() {
     const { playlist } = this.props;
 
-    const componentClasses = ["trackList"];
+    const componentClasses = ['trackList'];
 
     if (playlist) {
-      componentClasses.push("trackListShow");
+      componentClasses.push('trackListShow');
     }
 
     const tracks = playlist && playlist.tracks && playlist.tracks.map((track, i) => {
       const isActive = this.props.soundCloudAudio._playlistIndex === i;
 
       const className = isActive
-        ? "trackButton trackButtonActive"
-        : "trackButton";
+        ? 'trackButton trackButtonActive'
+        : 'trackButton';
 
       return (
         <button
           key={track.id}
           className={className}
-          onClick={this.playTrackAtIndex.bind(this, i)}>
+          onClick={this.playTrackAtIndex.bind(this, i)}
+        >
           <span className="trackButtonTitle">{track.title}</span>
           <span className="trackButtonTime">{Timer.prettyTime(track.duration / 1000)}</span>
         </button>
@@ -222,19 +224,19 @@ class PlaylistSoundPlayer extends Component {
   }
 
   renderTrackInfo() {
-    let { playlist, currentTime, duration } = this.props;
-    let componentClasses = ["currentTrack"];
-    let previousButtonClass = "controlButton previousButton";
-    let nextButtonClass = "controlButton nextButton";
-    let playButtonClass = "controlButton playButton";
-    let volumeButtonClass = "controlButton volumeButton";
-    let progressClass = "progress";
-    let progressInnerClass = "progressInner";
-    let timerClass = "timer";
-    let headerClass = "header";
+    const { playlist, currentTime, duration } = this.props;
+    const componentClasses = ['currentTrack'];
+    const previousButtonClass = 'controlButton previousButton';
+    const nextButtonClass = 'controlButton nextButton';
+    const playButtonClass = 'controlButton playButton';
+    const volumeButtonClass = 'controlButton volumeButton';
+    const progressClass = 'progress';
+    const progressInnerClass = 'progressInner';
+    const timerClass = 'timer';
+    const headerClass = 'header';
 
     if (playlist) {
-      componentClasses.push("currentTrackShow");
+      componentClasses.push('currentTrackShow');
     }
 
     return (
@@ -250,8 +252,7 @@ class PlaylistSoundPlayer extends Component {
             <PlayButton
               className={playButtonClass}
               {...this.props}
-            >
-            </PlayButton>
+            />
             <NextButton
               className={nextButtonClass}
               onNextClick={this.nextIndex.bind(this)}
@@ -273,7 +274,7 @@ class PlaylistSoundPlayer extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   render() {

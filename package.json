@@ -8,6 +8,7 @@
     "stage": "react-static build --staging",
     "build": "react-static build",
     "lint": "eslint src/**/*.js",
+    "lint:fix": "eslint src/**/*.js --fix",
     "serve": "serve dist -p 3000",
     "test": "jest"
   },
