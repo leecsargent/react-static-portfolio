@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withSoundCloudAudio } from 'react-soundplayer/addons';
-import ClassNames from 'classnames';
 import {
   PlayButton,
   PrevButton,
@@ -159,6 +158,7 @@ class PlaylistSoundPlayer extends Component {
   }
 
   playTrackAtIndex(playlistIndex) {
+    // eslint-disable-next-line react/prop-types
     const { soundCloudAudio } = this.props;
 
     this.setState({ activeIndex: playlistIndex });
@@ -166,27 +166,28 @@ class PlaylistSoundPlayer extends Component {
   }
 
   nextIndex() {
+    // eslint-disable-next-line react/prop-types
     const { playlist } = this.props;
-    let { activeIndex } = this.state;
+    const { activeIndex } = this.state;
 
     if (activeIndex >= playlist.tracks.length - 1) {
       return;
     }
 
     if (activeIndex || activeIndex === 0) {
-      this.setState({ activeIndex: ++activeIndex });
+      this.setState({ activeIndex: activeIndex + 1 });
     }
   }
 
   prevIndex() {
-    let { activeIndex } = this.state;
+    const { activeIndex } = this.state;
 
     if (activeIndex <= 0) {
       return;
     }
 
     if (activeIndex || activeIndex === 0) {
-      this.setState({ activeIndex: --activeIndex });
+      this.setState({ activeIndex: activeIndex - 1 });
     }
   }
 
@@ -200,8 +201,9 @@ class PlaylistSoundPlayer extends Component {
     }
 
     const tracks = playlist && playlist.tracks && playlist.tracks.map((track, i) => {
+      // eslint-disable-next-line
       const isActive = this.props.soundCloudAudio._playlistIndex === i;
-
+      // eslint-enable
       const className = isActive
         ? 'trackButton trackButtonActive'
         : 'trackButton';
@@ -210,7 +212,7 @@ class PlaylistSoundPlayer extends Component {
         <button
           key={track.id}
           className={className}
-          onClick={this.playTrackAtIndex.bind(this, i)}
+          onClick={e => this.playTrackAtIndex(i, e)}
         >
           <span className="trackButtonTitle">{track.title}</span>
           <span className="trackButtonTime">{Timer.prettyTime(track.duration / 1000)}</span>
@@ -224,6 +226,7 @@ class PlaylistSoundPlayer extends Component {
   }
 
   renderTrackInfo() {
+    // eslint-disable-next-line react/prop-types
     const { playlist, currentTime, duration } = this.props;
     const componentClasses = ['currentTrack'];
     const previousButtonClass = 'controlButton previousButton';
@@ -246,7 +249,7 @@ class PlaylistSoundPlayer extends Component {
           <div className="playbackControls">
             <PrevButton
               className={previousButtonClass}
-              onPrevClick={this.prevIndex.bind(this)}
+              onPrevClick={() => this.prevIndex()}
               {...this.props}
             />
             <PlayButton
@@ -255,7 +258,7 @@ class PlaylistSoundPlayer extends Component {
             />
             <NextButton
               className={nextButtonClass}
-              onNextClick={this.nextIndex.bind(this)}
+              onNextClick={() => this.nextIndex()}
               {...this.props}
             />
             <VolumeControl
