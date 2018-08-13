@@ -41,10 +41,15 @@ const HomeWrapper = styled.div`
 
 const Home = withRouteData(({ projects }) => {
   const latestFeaturedProject = projects.filter(project => project.featured)
-    .sort((projectA, projectB) => ((projectA.createdAt > projectB.createdAt)
-      ? 1 : (projectB.createdAt < projectA.createdAt)
-        ? -1 : 0))[0];
-
+    .sort((projectA, projectB) => {
+      if (projectA.createdAt > projectB.createdAt) {
+        return -1;
+      }
+      if (projectA.createdAt < projectB.createdAt) {
+        return 1;
+      }
+      return 0;
+    })[0];
   const featureDetail = latestFeaturedProject.details.filter(detail => detail.featured)[0];
   const featuredImage = featureDetail.image;
 
@@ -60,8 +65,11 @@ const Home = withRouteData(({ projects }) => {
             <React.Fragment>
               {status === 'error' || !featuredImage
                   ? <Fallback style={{ backgroundColor: '#ccc' }} />
-                  : <React.Fragment>
-                    <img ref={ref} src={featuredImage} className="projectDetailImage" />
+                  :
+                  <React.Fragment>
+                    <Link to={`/work/${latestFeaturedProject.slug}/`}>
+                      <img ref={ref} src={featuredImage} className="projectDetailImage" alt="Recent Work" />
+                    </Link>
                     <LoadingPlaceholder
                       style={{
                           transition: 'opacity 1.2s',
@@ -71,7 +79,10 @@ const Home = withRouteData(({ projects }) => {
                       animate={status === 'loading'}
                     />
                     <TextTransition >
-                      <p className="subheader">☝️ Recent Work:
+                      <p className="subheader">
+                        <span role="img" aria-label="pointing up">
+                          ☝️
+                        </span> Recent Work:
                         {' '}
                         <Link to={`/work/${latestFeaturedProject.slug}/`}>
                           {latestFeaturedProject.title}
