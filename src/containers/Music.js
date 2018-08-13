@@ -10,6 +10,12 @@ const MusicWrapper = styled.div`
     box-sizing: border-box;
   }
 
+  .header {
+    margin-bottom: 60px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+
   .musicProjectsList {
     list-style: none;
     padding: 0;
@@ -34,7 +40,7 @@ const MusicWrapper = styled.div`
 export default withRouteData(({ playlists }) => (
   <MusicWrapper>
     <div className="musicContainer">
-      <h1>Not Work <span className="headerSpan">(Music)</span></h1>
+      <h1 className="header">Not Work <span className="headerSpan">(Music)</span></h1>
       <ul className="musicProjectsList">
         {playlists.map(playlist => (
           <li key={playlist.slug} className="musicProjectsListItem">

@@ -14,6 +14,9 @@ const HomeWrapper = styled.div`
 
   .header {
     font-size: 18px;
+    margin-bottom: 60px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
   }
 
   .subheader {
@@ -51,7 +54,7 @@ const Home = withRouteData(({ projects }) => {
       return 0;
     })[0];
   const featureDetail = latestFeaturedProject.details.filter(detail => detail.featured)[0];
-  const featuredImage = featureDetail.image;
+  const featuredImage = featureDetail && featureDetail.image;
 
   return (
     <HomeWrapper>
