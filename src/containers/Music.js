@@ -1,6 +1,5 @@
-import React from 'react'
-import { withRouteData, Link } from 'react-static'
-import PlaylistSoundPlayer from '../components/Playlist';
+import React from 'react';
+import { withRouteData, Link } from 'react-static';
 import styled from 'styled-components';
 
 const MusicWrapper = styled.div`
@@ -30,7 +29,7 @@ const MusicWrapper = styled.div`
       padding: 60px 0;
     }
   }
-`
+`;
 
 export default withRouteData(({ playlists }) => (
   <MusicWrapper>
@@ -45,4 +44,4 @@ export default withRouteData(({ playlists }) => (
       </ul>
     </div>
   </MusicWrapper>
-))
+));

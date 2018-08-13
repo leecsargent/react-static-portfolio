@@ -1,7 +1,8 @@
 import React from 'react';
-import { withRouteData, Link } from 'react-static';
-import Playlist from '../components/Playlist';
+import { withRouteData } from 'react-static';
 import styled from 'styled-components';
+import Playlist from '../components/Playlist';
+
 const PlaylistWrapper = styled.div`
   .playlistContainer {
     max-width: 500px;
@@ -15,17 +16,16 @@ const PlaylistWrapper = styled.div`
       padding: 60px 0;
     }
   }
-`
+`;
 
 const clientId = '77ed62a445e34fcc90617a4335460d6c';
 const url = 'https://soundcloud.com/leesargent/sets/';
 
 export default withRouteData(({ playlist }) => {
-  let urlArray = [url];
-  let resolveUrl;
-
+  const urlArray = [url];
   urlArray.push(playlist.slug);
-  resolveUrl = urlArray.join('');
+
+  const resolveUrl = urlArray.join('');
 
   return (
     <PlaylistWrapper>
@@ -33,8 +33,8 @@ export default withRouteData(({ playlist }) => {
         <Playlist
           clientId={clientId}
           resolveUrl={resolveUrl}
-          />
+        />
       </div>
     </PlaylistWrapper>
-  )
-})
+  );
+});

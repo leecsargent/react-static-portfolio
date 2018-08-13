@@ -1,9 +1,8 @@
-import React from 'react'
-import { withRouteData, Link } from 'react-static'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withRouteData } from 'react-static';
 import ImageLoading, { Fallback, LoadingPlaceholder } from 'react-image-loading';
 import styled from 'styled-components';
-import ironImageSolitude from './ironImageSolitude.jpg';
-import ImageLoader from '../components/ImageLoader';
 
 const PostWrapper = styled.div`
   .projectContainer {
@@ -39,55 +38,60 @@ const PostWrapper = styled.div`
       padding: 60px 0;
     }
   }
-`
+`;
 
 const Caption = (props) => {
   const { caption } = props;
   return (
     <p>{caption}</p>
-  )
-}
+  );
+};
 
-export default withRouteData(({ project }) => {
-  return (
-    <PostWrapper>
-      <div className="projectContainer">
-        <h3>{project.title}</h3>
-        <p className="projectDescription">{project.description}</p>
-        <ul className="projectDetailsList">
+Caption.propTypes = {
+  caption: PropTypes.string,
+};
+
+Caption.defaultProps = {
+  caption: '',
+};
+
+/* eslint-disable react/no-array-index-key */
+export default withRouteData(({ project }) => (
+  <PostWrapper>
+    <div className="projectContainer">
+      <h3>{project.title}</h3>
+      <p className="projectDescription">{project.description}</p>
+      <ul className="projectDetailsList">
         {
-          project.details && project.details.map((detail, index) => {
-            return (
-              <li key={ index } className="projectListItem" style={{minHeight: 350, position: 'relative'}}>
-                <ImageLoading>
-                  {(ref, status) => {
-                    return (
-                      <React.Fragment>
-                        {status === 'error' || !detail.image
-                          ? <Fallback style={{ backgroundColor: '#ccc'}} />
-                          : <React.Fragment>
-                              <img ref={ref} src={detail.image} className="projectDetailImage" />
-                              <Caption caption={detail.detailText} />
-                              <LoadingPlaceholder
-                                style={{
+          project.details && project.details.map((detail, index) => (
+            <li key={index} className="projectListItem" style={{ minHeight: 350, position: 'relative' }}>
+              <ImageLoading>
+                {(ref, status) => (
+                  <React.Fragment>
+                    {status === 'error' || !detail.image
+                          ? <Fallback style={{ backgroundColor: '#ccc' }} />
+                          :
+                          <React.Fragment>
+                            <img ref={ref} src={detail.image} className="projectDetailImage" alt="Project Detail" />
+                            <Caption caption={detail.detailText} />
+                            <LoadingPlaceholder
+                              style={{
                                   transition: 'opacity 0.5s',
                                   opacity: status === 'loading' ? 1 : 0,
-                                  backgroundColor: 'white'
+                                  backgroundColor: 'white',
                                 }}
-                                animate={status === 'loading'}
-                              />
-                            </React.Fragment>
+                              animate={status === 'loading'}
+                            />
+                          </React.Fragment>
                         }
-                      </React.Fragment>
-                    )
-                  }}
-                </ImageLoading>
-              </li>
-            );
-          })
+                  </React.Fragment>
+                    )}
+              </ImageLoading>
+            </li>
+            ))
         }
-        </ul>
-      </div>
-    </PostWrapper>
-  )
-})
+      </ul>
+    </div>
+  </PostWrapper>
+));
+/* eslint-enable */

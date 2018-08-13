@@ -1,13 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import { fetchProjects } from '../connectors/redux/actions/projects';
 
 class Projects extends React.Component {
-  constructor() {
-    super();
-  }
-
   componentDidMount() {
     this.props.fetchProjects();
   }
@@ -18,7 +14,7 @@ class Projects extends React.Component {
     if (status === 'BUSY') {
       return (
         <h1>loading...</h1>
-      )
+      );
     }
 
     return (
@@ -29,7 +25,7 @@ class Projects extends React.Component {
           </li>
         ))}
       </ul>
-    )
+    );
   }
 
   render() {
@@ -37,29 +33,27 @@ class Projects extends React.Component {
       <div>
         { this.renderProjects() }
       </div>
-    )
+    );
   }
 }
 
-const mapStateToProps = (
-  {
-    projects: {
-      projectsList,
-      status,
-    }
-  }
-) => (
+const mapStateToProps = ({
+  projects: {
+    projectsList,
+    status,
+  },
+}) => (
   {
     projectsList,
-    status
+    status,
   }
 );
 
-const mapDispatchToProps = (dispatch) => (
+const mapDispatchToProps = dispatch => (
   {
     fetchProjects: () => dispatch(fetchProjects()),
   }
-)
+);
 
 const ProjectsListConnected = connect(mapStateToProps, mapDispatchToProps)(Projects);
 
@@ -67,7 +61,19 @@ const About = () => (
   <div>
     <ProjectsListConnected />
   </div>
-)
+);
 
-export { ProjectsListConnected }
-export default About
+Projects.propTypes = {
+  fetchProjects: PropTypes.func,
+  projectsList: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  status: PropTypes.string,
+};
+
+Projects.defaultProps = {
+  fetchProjects: () => {},
+  projectsList: [],
+  status: 'BUSY',
+};
+
+export { ProjectsListConnected };
+export default About;

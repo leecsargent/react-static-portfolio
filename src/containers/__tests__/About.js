@@ -5,7 +5,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import { ProjectsListConnected } from '../About';
 enzyme.configure({ adapter: new Adapter() });
 
-describe('>>>H O M E --- REACT-REDUX (Shallow + passing the {store} directly)',()=>{
+describe('home container)',()=>{
   const initialState = {projects: {projectsList: []}}
   const mockStore = configureStore()
   let store;

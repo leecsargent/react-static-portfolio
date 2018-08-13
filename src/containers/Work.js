@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouteData, Link } from 'react-static';
 import styled from 'styled-components';
+
 const WorkWrapper = styled.div`
   .workContainer {
     max-width: 500px;
@@ -23,7 +24,7 @@ const WorkWrapper = styled.div`
       padding: 60px 0;
     }
   }
-`
+`;
 
 export default withRouteData(({ projects }) => (
   <WorkWrapper>
@@ -38,4 +39,4 @@ export default withRouteData(({ projects }) => (
       </ul>
     </div>
   </WorkWrapper>
-))
+));
