@@ -10,7 +10,7 @@
     "lint": "eslint src/**/*.js",
     "lint:fix": "eslint src/**/*.js --fix",
     "serve": "serve dist -p 3000",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -30,6 +30,7 @@
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.5",
     "redux-mock-store": "^1.5.3",
+    "sinon": "^6.1.5",
     "styled-components": "^3.4.2"
   },
   "devDependencies": {

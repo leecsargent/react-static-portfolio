@@ -53,7 +53,7 @@ const Home = withRouteData(({ projects }) => {
       }
       return 0;
     })[0];
-    
+
   const featureDetail = latestFeaturedProject.details.filter(detail => detail.featured)[0];
   const featuredImage = featureDetail && featureDetail.image;
 

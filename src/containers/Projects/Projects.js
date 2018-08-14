@@ -69,4 +69,6 @@ Projects.defaultProps = {
   status: 'BUSY',
 };
 
+export { Projects };
+
 export default ProjectsListConnected;

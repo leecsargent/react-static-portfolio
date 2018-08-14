@@ -10,14 +10,14 @@ export const fetchProjects = () =>  {
   }
 }
 
-const fetchProjectsSuccess = (projects) => {
+export const fetchProjectsSuccess = (projects) => {
   return {
     type: 'FETCH_PROJECTS_SUCCESS',
     payload: projects,
   }
 }
 
-const requestProjects = () => {
+export const requestProjects = () => {
   return {
     type: 'FETCH_PROJECTS_REQUEST'
   }
