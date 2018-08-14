@@ -5,7 +5,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import ProjectsListConnected, { Projects } from '../Projects';
 enzyme.configure({ adapter: new Adapter() });
 
-describe('ProjectsListConnected)', () => {
+describe('ProjectsListConnected', () => {
   const initialState = { projects: { projectsList: [] } };
   const mockStore = configureStore();
   let store;
@@ -20,7 +20,6 @@ describe('ProjectsListConnected)', () => {
     expect(container.prop('projectsList')).toEqual([]);
   });
 });
-
 
 describe('Projects', () => {
   it('calls componentDidMount() lifecycle method', () => {
@@ -50,4 +49,4 @@ describe('Projects', () => {
 
     expect(wrapper.find('li')).toHaveLength(1);
   });
-})
+});

@@ -22,7 +22,6 @@ const PlaylistWrapper = styled.div`
 
   .trackButton {
     font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-    display: flex;
     width: 100%;
     font-size: 1em;
     padding: 1rem;
@@ -36,6 +35,10 @@ const PlaylistWrapper = styled.div`
     -moz-transition: opacity0.5s;
     -o-transition: opacity 0.5s;
     transition: opacity 0.5s;
+  }
+
+  .trackButtonInnerFlex {
+    display: flex;
   }
 
   .trackButton:hover {
@@ -80,7 +83,14 @@ const PlaylistWrapper = styled.div`
 
   .playbackControls {
     display: flex;
+    max-width: 400px;
     justify-content: space-between;
+  }
+
+  .playbackProgress {
+    padding: 0 10px;
+    max-width: 378px;
+    margin-top: 20px;
   }
 
   .controlButton {
@@ -94,7 +104,7 @@ const PlaylistWrapper = styled.div`
   }
 
   .playButton {
-    width: 34px;
+    width: 38px;
   }
 
   .previousButton,
@@ -104,7 +114,6 @@ const PlaylistWrapper = styled.div`
 
   .progress {
     height: 10px;
-    width: 200px;
     background: #ccc;
     align-self: center;
   }
@@ -115,7 +124,8 @@ const PlaylistWrapper = styled.div`
   }
 
   .timer {
-    text-align: right;
+    text-align: left;
+    margin: 20px 0;
     font-size: 12px;
   }
 
@@ -140,6 +150,22 @@ const PlaylistWrapper = styled.div`
   @media (min-width: 768px) {
     .currentTrack {
       padding: 1rem;
+    }
+
+    .playbackProgress {
+      display: flex;
+      max-width: 500px;
+      margin: 20px 40px 0 0;
+      justify-content: space-between;
+    }
+
+    .progress {
+      width: 300px;
+    }
+
+    .timer {
+      margin: 0;
+      text-align: left;
     }
 
     .trackList {
@@ -214,8 +240,10 @@ class PlaylistSoundPlayer extends Component {
           className={className}
           onClick={e => this.playTrackAtIndex(i, e)}
         >
-          <span className="trackButtonTitle">{track.title}</span>
-          <span className="trackButtonTime">{Timer.prettyTime(track.duration / 1000)}</span>
+          <div className="trackButtonInnerFlex">
+            <span className="trackButtonTitle">{track.title}</span>
+            <span className="trackButtonTime">{Timer.prettyTime(track.duration / 1000)}</span>
+          </div>
         </button>
       );
     });
@@ -265,15 +293,18 @@ class PlaylistSoundPlayer extends Component {
               className={volumeButtonClass}
               {...this.props}
             />
+
+          </div>
+          <div className="playbackProgress">
             <Progress
               className={progressClass}
               innerClassName={progressInnerClass}
               value={(currentTime / duration) * 100 || 0}
               {...this.props}
             />
-          </div>
-          <div className={timerClass}>
-            <Timer duration={duration || 0} currentTime={currentTime} {...this.props} />
+            <div className={timerClass}>
+              <Timer duration={duration || 0} currentTime={currentTime} {...this.props} />
+            </div>
           </div>
         </div>
       </div>

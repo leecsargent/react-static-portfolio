@@ -37,7 +37,7 @@ const MusicWrapper = styled.div`
   }
 `;
 
-export default withRouteData(({ playlists }) => (
+export const Music = ({ playlists }) => (
   <MusicWrapper>
     <div className="musicContainer">
       <h1 className="header">Not Work <span className="headerSpan">(Music)</span></h1>
@@ -50,4 +50,6 @@ export default withRouteData(({ playlists }) => (
       </ul>
     </div>
   </MusicWrapper>
-));
+)
+
+export default withRouteData(Music);
