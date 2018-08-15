@@ -42,7 +42,8 @@ const HomeWrapper = styled.div`
   }
 `;
 
-const Home = withRouteData(({ projects }) => {
+
+export const Home = ({ projects }) => {
   const latestFeaturedProject = projects.filter(project => project.featured)
     .sort((projectA, projectB) => {
       if (projectA.createdAt > projectB.createdAt) {
@@ -101,7 +102,6 @@ const Home = withRouteData(({ projects }) => {
       </div>
     </HomeWrapper>
   );
-});
+}
 
-
-export default withSiteData(Home);
+export default withSiteData(withRouteData(Home));
