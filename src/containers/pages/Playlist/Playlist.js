@@ -3,7 +3,7 @@ import { withRouteData } from 'react-static';
 import styled from 'styled-components';
 import Playlist from '../../../components/Playlist';
 
-const PlaylistWrapper = styled.div`
+export const PlaylistWrapper = styled.div`
   .playlistContainer {
     max-width: 500px;
     padding: 60px 20px;
@@ -21,7 +21,7 @@ const PlaylistWrapper = styled.div`
 const clientId = '77ed62a445e34fcc90617a4335460d6c';
 const url = 'https://soundcloud.com/leesargent/sets/';
 
-export default withRouteData(({ playlist }) => {
+export const PlaylistConatiner = ({ playlist }) => {
   const urlArray = [url];
   urlArray.push(playlist.slug);
 
@@ -37,4 +37,6 @@ export default withRouteData(({ playlist }) => {
       </div>
     </PlaylistWrapper>
   );
-});
+}
+
+export default withRouteData(PlaylistConatiner);

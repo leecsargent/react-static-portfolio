@@ -42,7 +42,6 @@ const HomeWrapper = styled.div`
   }
 `;
 
-
 export const Home = ({ projects }) => {
   const latestFeaturedProject = projects.filter(project => project.featured)
     .sort((projectA, projectB) => {
