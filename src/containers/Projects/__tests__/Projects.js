@@ -6,18 +6,18 @@ import ProjectsListConnected, { Projects } from '../Projects';
 enzyme.configure({ adapter: new Adapter() });
 
 describe('ProjectsListConnected', () => {
-  const initialState = { projects: { projectsList: [] } };
+  const initialState = { projects: { allProjects: [] } };
   const mockStore = configureStore();
   let store;
-  let container;
+  let wrapper;
 
   beforeEach(()=>{
     store = mockStore(initialState);
-    container = shallow(<ProjectsListConnected store={store} /> )
+    wrapper = shallow(<ProjectsListConnected store={store} /> )
   })
 
   it('props match initial state', () => {
-    expect(container.prop('projectsList')).toEqual([]);
+    expect(wrapper.prop('allProjects')).toEqual([]);
   });
 });
 
@@ -29,24 +29,24 @@ describe('Projects', () => {
     expect(Projects.prototype.componentDidMount).toHaveBeenCalledTimes(1);
   });
 
-  it('returns a list when status is not BUSY', () => {
+  it('returns a list when projectsStatus is not BUSY', () => {
     const list = [];
-    const wrapper = shallow(<Projects projectsList={[]} status='FOO'/>);
+    const wrapper = shallow(<Projects allProjects={[]} projectsStatus='FOO'/>);
 
     expect(wrapper.find('ul')).toHaveLength(1);
   });
 
-  it('does not return a list when status is BUSY', () => {
+  it('returns list of all proejcts', () => {
     const list = [];
-    const wrapper = shallow(<Projects projectsList={[]} status='BUSY'/>);
+    const wrapper = shallow(<Projects allProjects={[{slug: 'foo'}, {slug: 'bar'}]} projectsStatus='FOO'/>);
 
-    expect(wrapper.find('ul')).toHaveLength(0);
+    expect(wrapper.find('li')).toHaveLength(2);
   });
 
-  it('returns a list with with an li for each item in projectList', () => {
+  it('does not return a list when projectsStatus is BUSY', () => {
     const list = [];
-    const wrapper = shallow(<Projects projectsList={[{'slug': 'foo'}]} status='FOO'/>);
+    const wrapper = shallow(<Projects allProjects={[]} projectsStatus='BUSY'/>);
 
-    expect(wrapper.find('li')).toHaveLength(1);
+    expect(wrapper.find('ul')).toHaveLength(0);
   });
 });

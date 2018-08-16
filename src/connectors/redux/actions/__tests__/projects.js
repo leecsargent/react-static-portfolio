@@ -1,5 +1,4 @@
 import React from 'react'
-import configureStore from 'redux-mock-store'
 import enzyme, { shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import * as actionTypes from '../projects';
@@ -13,7 +12,7 @@ describe('fetchProjectsSuccess', () => {
         payload: {foo: 'bar'},
       }
     )
-  })
+  });
 });
 
 describe('requestProjects', () => {
