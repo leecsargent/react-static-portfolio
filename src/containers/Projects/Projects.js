@@ -58,15 +58,13 @@ const ProjectsListConnected = connect(
 )(Projects);
 
 Projects.propTypes = {
-  fetchProjects: PropTypes.func,
-  allProjects: PropTypes.array, // eslint-disable-line react/forbid-prop-types
-  projectsStatus: PropTypes.string,
-};
-
-Projects.defaultProps = {
-  fetchProjects: () => {},
-  allProjects: [],
-  projectsStatus: 'BUSY',
+  allProjects: PropTypes.arrayOf(PropTypes.shape({
+    featured: PropTypes.boolean,
+    slug: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  })).isRequired,
+  fetchProjects: PropTypes.func.isRequired,
+  projectsStatus: PropTypes.string.isRequired,
 };
 
 export { Projects };

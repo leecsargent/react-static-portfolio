@@ -1,16 +1,23 @@
+import { projectActionTypes } from '../constants';
+
+const {
+  FETCH_PROJECTS_REQUEST,
+  FETCH_PROJECTS_SUCCESS,
+} = projectActionTypes;
+
 let initialState = {
   projectsList: [],
   status: 'BUSY',
-}
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'FETCH_PROJECTS_REQUEST':
+    case FETCH_PROJECTS_REQUEST:
       return {
         ...state,
         status: 'BUSY',
       }
-    case 'FETCH_PROJECTS_SUCCESS':
+    case FETCH_PROJECTS_SUCCESS:
       return {
         ...state,
         projectsList: action.payload,

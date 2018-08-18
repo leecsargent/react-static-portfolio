@@ -1,24 +1,39 @@
+import axios from 'axios';
+import { projectActionTypes } from '../constants';
 import config from '../../../../config';
+
+const {
+  FETCH_PROJECTS_REQUEST,
+  FETCH_PROJECTS_SUCCESS,
+  FETCH_PROJECTS_ERROR,
+} = projectActionTypes;
 
 export const fetchProjects = () =>  {
   return dispatch => {
     dispatch(requestProjects())
-    return fetch(`${config.endpoint}/projects`, {})
-      .then(response => response.json())
-      .then(json => dispatch(fetchProjectsSuccess(json)))
-      .catch(error => console.log('error--------------', error));
+    return axios.get(`${config.endpoint}/projects`)
+      .then(response => dispatch(fetchProjectsSuccess(response.data)))
+      .catch(error => dispatch(fetchProjectsError(error)));
   }
 }
 
 export const fetchProjectsSuccess = (projects) => {
   return {
-    type: 'FETCH_PROJECTS_SUCCESS',
+    type: FETCH_PROJECTS_SUCCESS,
     payload: projects,
+  }
+}
+
+
+export const fetchProjectsError = (error) => {
+  return {
+    type: FETCH_PROJECTS_ERROR,
+    error: error.error,
   }
 }
 
 export const requestProjects = () => {
   return {
-    type: 'FETCH_PROJECTS_REQUEST'
+    type: FETCH_PROJECTS_REQUEST
   }
 }

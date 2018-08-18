@@ -5,20 +5,39 @@ enzyme.configure({ adapter: new Adapter() });
 
 import { Home } from '../Home';
 
+const featuredProject = {
+  createdAt: '2018-08-18T18:30:18.845Z',
+  details: [
+    {
+      featured: true,
+      image: 'path/to/image',
+    },
+    {
+      detailText: 'bar',
+    },
+  ],
+  featured: true,
+};
+
+const notFeaturedProject = {
+  createdAt: '2017-08-18T18:30:18.845Z',
+  details: [
+    {
+      detailText: 'foo',
+    },
+  ],
+};
+
+const projects = [
+  featuredProject,
+  notFeaturedProject,
+];
+
 describe('Music', () => {
   it('renders correctly', () => {
-    const projects = [
-      {
-        featured: true,
-        details: [
-          {
-            featured: true,
-          },
-        ],
-      },
-    ];
+
     const wrapper = shallow(<Home projects={projects} />);;
 
-    // expect().toHaveLength(1);
+    expect(wrapper.find('.subheader')).toHaveLength(1);
   });
 });

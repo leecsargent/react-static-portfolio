@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { withSiteData, withRouteData, Link } from 'react-static';
 import ImageLoading, { Fallback, LoadingPlaceholder } from 'react-image-loading';
 import styled from 'styled-components';
@@ -43,17 +43,7 @@ const HomeWrapper = styled.div`
 `;
 
 export const Home = ({ projects }) => {
-  const latestFeaturedProject = projects.filter(project => project.featured)
-    .sort((projectA, projectB) => {
-      if (projectA.createdAt > projectB.createdAt) {
-        return -1;
-      }
-      if (projectA.createdAt < projectB.createdAt) {
-        return 1;
-      }
-      return 0;
-    })[0];
-
+  const latestFeaturedProject = projects.find(project => project.featured);
   const featureDetail = latestFeaturedProject.details.filter(detail => detail.featured)[0];
   const featuredImage = featureDetail && featureDetail.image;
 
@@ -61,16 +51,17 @@ export const Home = ({ projects }) => {
     <HomeWrapper>
       <div className="homeContainer">
         <h1 className="header">Lee Sargent</h1>
-        <TextTransition >
+        <TextTransition>
           <p className="subheader">Front End Developer</p>
         </TextTransition>
+        {/* TODO figure out a better way than this. */}
         <ImageLoading>
           {(ref, status) => (
-            <React.Fragment>
+            <Fragment>
               {status === 'error' || !featuredImage
                   ? <Fallback style={{ backgroundColor: '#ccc' }} />
                   :
-                  <React.Fragment>
+                  <Fragment>
                     <Link to={`/work/${latestFeaturedProject.slug}/`}>
                       <img ref={ref} src={featuredImage} className="projectDetailImage" alt="Recent Work" />
                     </Link>
@@ -93,9 +84,9 @@ export const Home = ({ projects }) => {
                         </Link>
                       </p>
                     </TextTransition>
-                  </React.Fragment>
+                  </Fragment>
                 }
-            </React.Fragment>
+            </Fragment>
             )}
         </ImageLoading>
       </div>
