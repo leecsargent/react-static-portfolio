@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchProjects } from '../../connectors/redux/actions/projects';
+import * as actions from '../../connectors/redux/actions/projects';
 import {
   selectAllProjects,
   selectProjectsStatus,
@@ -46,15 +46,9 @@ const mapStateToProps = (state) => ({
     projectsStatus: selectProjectsStatus(state)
 });
 
-const mapDispatchToProps = dispatch => (
-  {
-    fetchProjects: () => dispatch(fetchProjects()),
-  }
-);
-
 const ProjectsListConnected = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  actions,
 )(Projects);
 
 Projects.propTypes = {
