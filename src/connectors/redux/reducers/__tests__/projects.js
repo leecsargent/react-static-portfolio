@@ -1,44 +1,80 @@
-import projectsReducer from '../projects';
+import createProjectsList from '../projects';
 import { projectActionTypes } from '../../constants';
+import * as selectors from '../index';
 
-describe('projects reducer', () => {
-  it('should return the initial state', () => {
-    expect(projectsReducer(undefined, {})).toEqual({
-        projectsList: [],
-        status: 'BUSY',
-      }
-    )
+const {
+  FETCH_PROJECTS_REQUEST,
+  FETCH_PROJECTS_SUCCESS,
+} = projectActionTypes;
+
+describe('createProjectsList', () => {
+  const filter = 'all';
+  const projectsList = createProjectsList(filter);
+
+  it('creates a reducer', () => {
+    expect(projectsList).not.toBe(null);
   });
 
-  it('should handle FETCH_PROJECTS_REQUEST', () => {
+  it('handles FETCH_PROJECTS_SUCCESS with a filter', () => {
     expect(
-      projectsReducer({}, {
-        type: projectActionTypes.FETCH_PROJECTS_REQUEST,
-      })
+      projectsList(
+        {},
+        {
+          payload: [{_id: '1'}, {_id: '2'}],
+          type: FETCH_PROJECTS_SUCCESS,
+          filter,
+        }
+      )
     ).toEqual({
-        status: 'BUSY',
-      }
-    );
+      ids: [
+        '1',
+        '2',
+      ],
+      isFetching: false,
+    });
+  });
+  it('handles FETCH_PROJECTS_SUCCESS without a filter', () => {
+    expect(
+      projectsList(
+        {},
+        {
+          payload: [{_id: '1'}, {_id: '2'}],
+          type: FETCH_PROJECTS_SUCCESS,
+        }
+      )
+    ).toEqual({
+      ids: [],
+      isFetching: false,
+    });
   });
 
-  it('should handle FETCH_PROJECTS_SUCCESS', () => {
+  it('handles FETCH_PROJECTS_REQUEST', () => {
     expect(
-      projectsReducer({}, {
-        type: projectActionTypes.FETCH_PROJECTS_SUCCESS,
-        payload: [
-          {
-            foo: 'bar',
-          }
-        ]
-      })
+      projectsList(
+        {},
+        {
+          type: FETCH_PROJECTS_REQUEST,
+          filter,
+        }
+      )
     ).toEqual({
-        projectsList: [
-          {
-            foo: 'bar',
-          }
-        ],
-        status: 'READY',
-      }
-    )
-  });
+      ids: [],
+      isFetching: true,
+    });
+  })
+
+  it('returns default state', () => {
+    expect(
+      projectsList(
+        undefined,
+        {
+          type: 'foo',
+          filter,
+        }
+      )
+    ).toEqual({
+      ids: [],
+      isFetching: false,
+    });
+  })
 })

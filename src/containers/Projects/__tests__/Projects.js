@@ -18,23 +18,23 @@ describe('Projects', () => {
     props = {
       fetchProjects: jest.fn(),
       allProjects: [],
-      projectsStatus: 'BUSY',
+      isFetching: true,
       filter: 'all',
     }
   });
 
-  it('should call fetchProects', () => {
+  it('should call fetchProjects', () => {
     mount(<Projects {...props} />)
     expect(props.fetchProjects.mock.calls.length).toBe(1)
   });
 
-  it('should render loading text if projectsStatus is BUSY', () => {
-    wrapper = mount(<Projects {...Object.assign({}, props, {projectsStatus: 'BUSY'})} />)
+  it('should render loading text if isFetching is BUSY', () => {
+    wrapper = mount(<Projects {...Object.assign({}, props, {isFetching: true})} />)
     expect(wrapper.find('h1').text()).toBe('loading...')
   });
 
-  it('should render a list if projectsStatus is not BUSY', () => {
-    wrapper = mount(<Projects {...Object.assign({}, props, {projectsStatus: ''})} />)
+  it('should render a list if isFetching is not BUSY', () => {
+    wrapper = mount(<Projects {...Object.assign({}, props, {isFetching: false})} />)
     expect(wrapper.find('ul')).toHaveLength(1);
   });
 
@@ -43,7 +43,7 @@ describe('Projects', () => {
       {},
       props,
       {
-        projectsStatus: 'READY',
+        isFetching: false,
         allProjects: [
           {
             title: 'Foo',
@@ -63,9 +63,18 @@ describe('Projects', () => {
 
 describe('ProjectsListConnected', () => {
   initialState = {
-    projects: {
-      projectsList: [],
-      status: 'BUSY',
+    byId: {
+      '1' : {
+        _id: '1',
+        slug: 'one',
+        title: 'One',
+      },
+    },
+    projectsListByFilter: {
+      all: {
+        ids: ['1'],
+        isFetching: false,
+      },
     },
   };
 
@@ -78,7 +87,7 @@ describe('ProjectsListConnected', () => {
     wrapper = mount(<ProjectsListConnected store={store} props={props} /> )
   })
 
-  it('calls fetchProects', () => {
+  it('calls fetchProjects', () => {
     expect(props.fetchProjects.mock.calls.length).toBe(1)
   });
 });

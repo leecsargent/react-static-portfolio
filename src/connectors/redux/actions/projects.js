@@ -9,19 +9,19 @@ const {
 } = projectActionTypes;
 
 export const fetchProjects = (filter) =>  {
-  console.log('filter in fetch', filter);
   return dispatch => {
-    dispatch(requestProjects())
+    dispatch(requestProjects(filter))
     return axios.get(`${config.endpoint}/projects`)
-      .then(response => dispatch(fetchProjectsSuccess(response.data)))
+      .then(response => dispatch(fetchProjectsSuccess(response.data, filter)))
       .catch(error => dispatch(fetchProjectsError(error)));
   }
 }
 
-export const fetchProjectsSuccess = (projects) => {
+export const fetchProjectsSuccess = (projects, filter) => {
   return {
     type: FETCH_PROJECTS_SUCCESS,
     payload: projects,
+    filter,
   }
 }
 
@@ -33,8 +33,9 @@ export const fetchProjectsError = (error) => {
   }
 }
 
-export const requestProjects = () => {
+export const requestProjects = (filter) => {
   return {
-    type: FETCH_PROJECTS_REQUEST
+    type: FETCH_PROJECTS_REQUEST,
+    filter
   }
 }

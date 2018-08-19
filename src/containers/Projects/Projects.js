@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as actions from '../../connectors/redux/actions/projects';
 import {
-  selectAllProjects,
-  selectProjectsStatus,
-} from '../../connectors/redux/selectors/projects';
+  getVisibleProjects,
+  getErrorMessage,
+  getIsFetching
+} from '../../connectors/redux/reducers';
 
 class Projects extends React.Component {
   componentDidMount() {
@@ -15,9 +16,9 @@ class Projects extends React.Component {
   }
 
   renderProjects() {
-    const { allProjects, projectsStatus } = this.props;
+    const { allProjects, isFetching } = this.props;
 
-    if (projectsStatus === 'BUSY') {
+    if (isFetching) {
       return (
         <h1>loading...</h1>
       );
@@ -46,8 +47,8 @@ class Projects extends React.Component {
 const mapStateToProps = (state) => {
   const filter = 'all' // temporary
   return {
-    allProjects: selectAllProjects(state),
-    projectsStatus: selectProjectsStatus(state),
+    allProjects: getVisibleProjects(state, filter),
+    isFetching: getIsFetching(state, filter),
     filter,
   }
 };
@@ -65,7 +66,7 @@ Projects.propTypes = {
   })).isRequired,
   filter: PropTypes.string.isRequired,
   fetchProjects: PropTypes.func.isRequired,
-  projectsStatus: PropTypes.string.isRequired,
+  isFetching: PropTypes.bool.isRequired,
 };
 
 export { Projects };
