@@ -19,6 +19,7 @@ describe('Projects', () => {
       fetchProjects: jest.fn(),
       allProjects: [],
       projectsStatus: 'BUSY',
+      filter: 'all',
     }
   });
 

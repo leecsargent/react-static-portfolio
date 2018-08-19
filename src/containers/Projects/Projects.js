@@ -9,7 +9,9 @@ import {
 
 class Projects extends React.Component {
   componentDidMount() {
-    this.props.fetchProjects();
+    const { filter, fetchProjects } = this.props;
+
+    fetchProjects(filter);
   }
 
   renderProjects() {
@@ -41,10 +43,14 @@ class Projects extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => {
+  const filter = 'all' // temporary
+  return {
     allProjects: selectAllProjects(state),
-    projectsStatus: selectProjectsStatus(state)
-});
+    projectsStatus: selectProjectsStatus(state),
+    filter,
+  }
+};
 
 const ProjectsListConnected = connect(
   mapStateToProps,
@@ -57,6 +63,7 @@ Projects.propTypes = {
     slug: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
   })).isRequired,
+  filter: PropTypes.string.isRequired,
   fetchProjects: PropTypes.func.isRequired,
   projectsStatus: PropTypes.string.isRequired,
 };

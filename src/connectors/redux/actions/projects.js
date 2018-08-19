@@ -8,7 +8,8 @@ const {
   FETCH_PROJECTS_ERROR,
 } = projectActionTypes;
 
-export const fetchProjects = () =>  {
+export const fetchProjects = (filter) =>  {
+  console.log('filter in fetch', filter);
   return dispatch => {
     dispatch(requestProjects())
     return axios.get(`${config.endpoint}/projects`)
