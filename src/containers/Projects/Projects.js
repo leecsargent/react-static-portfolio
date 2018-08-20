@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import * as actions from '../../connectors/redux/actions/projects';
 import {
   getVisibleProjects,
-  getErrorMessage,
+  getFeaturedProjects,
+  getNotFeaturedProjects,
   getIsFetching
 } from '../../connectors/redux/reducers';
 
@@ -16,7 +17,11 @@ class Projects extends React.Component {
   }
 
   renderProjects() {
-    const { allProjects, isFetching } = this.props;
+    const {
+      isFetching,
+      featuredProjects,
+      notFeaturedProjects
+    } = this.props;
 
     if (isFetching) {
       return (
@@ -26,7 +31,12 @@ class Projects extends React.Component {
 
     return (
       <ul className="workProjectsList">
-        {allProjects.map(project => (
+        {featuredProjects.map(project => (
+          <li key={project.slug} className="workProjectsListItem">
+            {project.title}
+          </li>
+        ))}
+        {notFeaturedProjects.map(project => (
           <li key={project.slug} className="workProjectsListItem">
             {project.title}
           </li>
@@ -49,6 +59,8 @@ const mapStateToProps = (state) => {
   return {
     allProjects: getVisibleProjects(state, filter),
     isFetching: getIsFetching(state, filter),
+    featuredProjects: getFeaturedProjects(state),
+    notFeaturedProjects: getNotFeaturedProjects(state),
     filter,
   }
 };
