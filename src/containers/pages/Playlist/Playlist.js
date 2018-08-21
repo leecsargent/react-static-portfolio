@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouteData } from 'react-static';
 import styled from 'styled-components';
 import Playlist from '../../../components/Playlist';
+import config from '../../../../config';
 
 export const PlaylistWrapper = styled.div`
   .playlistContainer {
@@ -18,7 +19,7 @@ export const PlaylistWrapper = styled.div`
   }
 `;
 
-const clientId = '77ed62a445e34fcc90617a4335460d6c';
+const clientId = config.soundCloudClientId;
 const url = 'https://soundcloud.com/leesargent/sets/';
 
 export const PlaylistConatiner = ({ playlist }) => {
