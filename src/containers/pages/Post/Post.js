@@ -60,7 +60,12 @@ export default withRouteData(({ project }) => (
   <PostWrapper>
     <div className="projectContainer">
       <h3>{project.title}</h3>
-      <p className="projectDescription">{project.description}</p>
+      {
+        project.description.map((description, index) => (
+          <p key={index} className="projectDescription">{description}</p>
+        ))
+      }
+
       <ul className="projectDetailsList">
         {
           project.details && project.details.map((detail, index) => (

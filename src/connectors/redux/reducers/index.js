@@ -40,7 +40,6 @@ export const getFeaturedProjects = createSelector(
 export const getNotFeaturedProjects = createSelector(
   [getAllProjects],
   (projects) => {
-    console.log(projects.filter(project => !project.featured))
     return projects.filter(project => !project.featured);
   }
 )
